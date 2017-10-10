@@ -8,7 +8,7 @@ using MongoDB.Driver.Linq;
 using System.Linq;
 
 using auth_net.Model;
-using auth_net.Models.Common;
+using auth_net.DAO.Common;
 
 namespace auth_net.DAO
 {
@@ -28,6 +28,7 @@ namespace auth_net.DAO
 
         public User AddUser(User u)
         {
+            u.Password = MongoHelper<User>.SaltAndEncryptPassword(u.Password);
             _users.InsertOne(u);
             try
             {
@@ -65,7 +66,8 @@ namespace auth_net.DAO
         {
             var update = Builders<User>.Update
                         .Set(u => u.UserRole, user.UserRole)
-                        .Set(u => u.FullName, user.FullName);
+                        .Set(u => u.FullName, user.FullName)
+                        .Set(u => u.Password, MongoHelper<User>.SaltAndEncryptPassword(user.Password));
             var result = _users.UpdateOne<User>(u => u.UserName == userName, update);
             return result.IsAcknowledged;
         }

@@ -24,6 +24,11 @@ namespace auth_net.Controllers
             {
                 NotFound($"Could not find username {userLogin.UserName}");
             }
+
+            if(!Util.PasswordsMatch(user, userLogin.Password))
+            {
+                throw new AuthenticationException("Passwords don't match");
+            }
             return Ok(Util.GenerateJWT(user));
         }
 
