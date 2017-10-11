@@ -15,6 +15,7 @@ namespace auth_net.Controllers
 {
     [Produces("application/json")]
     [Route("api/Login")]
+    [ValidateModel]
     public class LoginController : Controller
     {
         private TokenOptions _tokenOptions;
@@ -26,7 +27,6 @@ namespace auth_net.Controllers
 
 
         [HttpPost]
-        [ValidateModel]
         public IActionResult Login([FromBody]UserLoginModel userLogin)
         {
             User user = UserRepository.Get().GetUser(userLogin.UserName);
