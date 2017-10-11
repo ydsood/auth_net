@@ -2,7 +2,7 @@
 Implementation of Authentication and JWT based authorization using .NET core and mongoDB
 
 ## Why a new project
-Just because I could ;). Also, available implementations that I could find were outdated and there was no clear guidance on using the most recent MongoDB C# driver for ASP .NET core 2.0. If you've landed here looking for an implementation that works maybe this will help you.
+Available implementations that I could find were outdated and there was no clear documentation on using the most recent MongoDB C# driver for ASP .NET core 2.0. If you've landed here looking for an implementation that works I hope this helps you.
 
 ### Pre-requisites
 - Install MongoDB
