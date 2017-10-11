@@ -10,7 +10,7 @@ Available implementations that I could find were outdated and there was no clear
 - This project was developed using VS 2017
 
 ### Notable Differences
-- The [Documentation](http://www.dotnetcurry.com/aspnet-mvc/1267/using-mongodb-nosql-database-with-aspnet-webapi-core) incorrectly defines usage for  `Collection.Update` method. It expects a LINQ functor but the docs say that a Mongo Filter is needed.
+- The [Documentation](https://docs.mongodb.com/getting-started/csharp/update/) incorrectly defines usage for  `Collection.Update` method. It expects a LINQ functor but the docs say that a Mongo Filter is needed.
 
 ```C#
 var result = _users.UpdateOne<User>(u => u.UserName == userName, update);
