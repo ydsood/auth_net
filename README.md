@@ -11,6 +11,22 @@ The [Documentation](http://www.dotnetcurry.com/aspnet-mvc/1267/using-mongodb-nos
 var result = _users.UpdateOne<User>(u => u.UserName == userName, update);
 ```
 
+Shawn Wildermuth's blog injects IConfigurationRoot into controllers to access properties. The appropriate way suggested by [MSDN docs](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration?tabs=basicconfiguration) is using `IOptions` classes that allow for strongly typed options objects on top of all available configuration in `appsettings.json`.
+
+```C#
+//Startup.cs -> ConfigureServices
+services.Configure<TokenOptions>(Configuration.GetSection("Tokens"));
+
+//LoginController
+private TokenOptions _tokenOptions;
+
+public LoginController(IOptions<TokenOptions> tokenOptionsAccessor)
+{
+	_tokenOptions = tokenOptionsAccessor.Value;
+}
+
+```
+
 ### References
 - [MongoDB C# driver docs](https://docs.mongodb.com/getting-started/csharp/update/)
 - [Dot Net Curry](http://www.dotnetcurry.com/aspnet-mvc/1267/using-mongodb-nosql-database-with-aspnet-webapi-core)

@@ -19,21 +19,8 @@ namespace auth_net
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var tokenValidationParameters = new TokenValidationParameters()
-            {
-                ValidIssuer = "http://localhost:54906/"
-            };
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,
-                options =>
-                {
-                    options.TokenValidationParameters = tokenValidationParameters;
-                    options.Audience = "resource-server";
-                    options.RequireHttpsMetadata = false;
-                });
-            services.AddAuthorization();
+            services.Configure<TokenOptions>(Configuration.GetSection("Tokens"));
             services.AddMvc();
-            //string secret = Configuration.GetSection("TokenAuthentication")["SecretKey"];
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

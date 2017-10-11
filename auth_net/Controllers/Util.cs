@@ -5,12 +5,23 @@ using System.IdentityModel.Tokens.Jwt;
 using System;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace auth_net.Controllers
 {
     public class Util
     {
-        public static string GenerateJWT(User user)
+        //TODO : Injecting IConfigurationRoot v/s passing it to the
+        //       method that needs it. I'm confused here.
+
+        /*private readonly IConfigurationRoot _config;
+
+        public Util(IConfigurationRoot config)
+        {
+            _config = config;
+        }*/
+
+        public static string GenerateJWT(User user, TokenOptions tokenOptions)
         {
             var claims = new[]
             {
@@ -19,15 +30,15 @@ namespace auth_net.Controllers
             };
 
             //TODO : Get this stuff out from here into config or certificates
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("JustPuttingInSomethingForNow"));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions.SecretKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
            
             var token = new JwtSecurityToken(
-              issuer: "http://localhost:50919",
-              audience: "http://localhost:50919",
+              issuer: tokenOptions.Issuer,
+              audience: tokenOptions.Audience,
               claims: claims,
-              expires: DateTime.Now.AddMinutes(30),
+              expires: DateTime.Now.AddMinutes(tokenOptions.Expiration),
               signingCredentials: creds);
             //TODO : Start returning token.ValidTo as expiration time
             return new JwtSecurityTokenHandler().WriteToken(token);

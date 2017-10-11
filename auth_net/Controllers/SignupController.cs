@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using auth_net.Model;
 using auth_net.DAO;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace auth_net.Controllers
 {
@@ -13,6 +15,12 @@ namespace auth_net.Controllers
     [Route("api/Signup")]
     public class SignupController : Controller
     {
+        private TokenOptions _tokenOptions;
+        public SignupController(IOptions<TokenOptions> tokenOptionsAccessor)
+        {
+            _tokenOptions = tokenOptionsAccessor.Value;
+        }
+
         [HttpPost]
         public IActionResult SignUp([FromBody]User user)
         {
@@ -26,7 +34,7 @@ namespace auth_net.Controllers
             catch(KeyNotFoundException)
             {
                 User newUser = repo.AddUser(user);
-                return Ok(new { Token = Util.GenerateJWT(newUser) });
+                return Ok(new { Token = Util.GenerateJWT(newUser, _tokenOptions) });
             }
 
             return StatusCode(StatusCodes.Status409Conflict, "User already exists"); 

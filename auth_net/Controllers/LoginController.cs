@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using auth_net.DAO;
 using auth_net.Model;
 using System.Security.Authentication;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace auth_net.Controllers
 {
@@ -14,6 +16,14 @@ namespace auth_net.Controllers
     [Route("api/Login")]
     public class LoginController : Controller
     {
+        private TokenOptions _tokenOptions;
+
+        public LoginController(IOptions<TokenOptions> tokenOptionsAccessor)
+        {
+            _tokenOptions = tokenOptionsAccessor.Value;
+        }
+
+
         [HttpPost]
         public IActionResult Login([FromBody]UserLoginModel userLogin)
         {
@@ -29,7 +39,7 @@ namespace auth_net.Controllers
             {
                 throw new AuthenticationException("Passwords don't match");
             }
-            return Ok(new { Token = Util.GenerateJWT(user) });
+            return Ok(new { Token = Util.GenerateJWT(user, _tokenOptions) });
         }
 
         [HttpGet]
