@@ -31,7 +31,7 @@ public LoginController(IOptions<TokenOptions> tokenOptionsAccessor)
 }
 
 ```
-- .NET core 2.0 has deprecated `app.Use<AuthenticationType>` and authentication needs to be added as a service that is called only once in the configured pipeline.
+- .NET core 2.0 has [deprecated](https://docs.microsoft.com/en-us/aspnet/core/migration/1x-to-2x/identity-2x) `app.Use<AuthenticationType>` and authentication needs to be added as a service that is called only once in the configured pipeline.
 
 ```C#
 public void ConfigureServices(IServiceCollection services)
