@@ -11,7 +11,7 @@ namespace auth_net.Model
         [Required]
         public string UserName { get; set; }
         [Required]
-        [MinLength(8)]
+        [MinLength(3)]
         public string Password { get; set; }
     }
 }

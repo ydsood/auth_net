@@ -47,6 +47,7 @@ namespace auth_net
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
