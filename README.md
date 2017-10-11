@@ -4,7 +4,7 @@ Implementation of Authentication and JWT based authorization using .NET core and
 ## Why a new project
 Just because I could ;). Also, available implementations that I could find were outdated and there was no clear guidance on using the most recent MongoDB C# driver for ASP .NET core 2.0. If you've landed here looking for an implementation that works maybe this will help you.
 
-###Pre-requisites
+### Pre-requisites
 - Install MongoDB
 - Install .NET core 2.0 SDK
 - This project was developed using VS 2017
@@ -57,7 +57,7 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 ```
 
 
-###More Research
+### More Research
 [Mongoose](http://mongoosejs.com/), an object modeling library for MongoDB in NodeJS exposes a very useful feature `PreSaveHooks`. This allows for controlling fields like passwords and how they are persisted in the DB. The [C# Driver for MongoDB](https://docs.mongodb.com/getting-started/csharp/) does not have any similar features and it would be interesting to investigate if somethign like this can be introduced here.
 
 ### References
