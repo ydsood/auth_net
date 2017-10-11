@@ -26,6 +26,7 @@ namespace auth_net
                 ValidIssuer = Configuration["Tokens:Issuer"],
                 ValidAudience = Configuration["Tokens:Audience"],
                 ValidateIssuerSigningKey = true,
+                //TODO : This should be a certificate and not read from a config file
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:SigningKey"])),
                 ValidateLifetime =true
             };

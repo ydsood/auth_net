@@ -11,8 +11,8 @@ namespace auth_net.Controllers
 {
     public class Util
     {
-        //TODO : Injecting IConfigurationRoot v/s passing it to the
-        //       method that needs it. I'm confused here.
+        //TODO : Injecting IConfigurationRoot v/s passing it to the method that needs it.
+        //I'm confused here.
 
         /*private readonly IConfigurationRoot _config;
 
@@ -29,10 +29,8 @@ namespace auth_net.Controllers
               new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 
-            //TODO : Get this stuff out from here into config or certificates
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions.SigningKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
            
             var token = new JwtSecurityToken(
               issuer: tokenOptions.Issuer,
@@ -40,7 +38,7 @@ namespace auth_net.Controllers
               claims: claims,
               expires: DateTime.Now.AddMinutes(tokenOptions.Expiration),
               signingCredentials: creds);
-            //TODO : Start returning token.ValidTo as expiration time
+
             return new { Token = new JwtSecurityTokenHandler().WriteToken(token), Expires = token.ValidTo };
         }
 
