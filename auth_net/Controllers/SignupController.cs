@@ -8,11 +8,13 @@ using auth_net.Model;
 using auth_net.DAO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using auth_net.Filters;
 
 namespace auth_net.Controllers
 {
     [Produces("application/json")]
     [Route("api/Signup")]
+    [ValidateModel]
     public class SignupController : Controller
     {
         private TokenOptions _tokenOptions;
@@ -24,8 +26,6 @@ namespace auth_net.Controllers
         [HttpPost]
         public IActionResult SignUp([FromBody]User user)
         {
-            if (null == user ||string.IsNullOrEmpty(user.UserName) || string.IsNullOrEmpty(user.UserRole) || string.IsNullOrEmpty(user.FullName))
-                return Json(new { Error = "Missing parameters" });
             var repo = UserRepository.Get();
             try
             {
@@ -34,7 +34,7 @@ namespace auth_net.Controllers
             catch(KeyNotFoundException)
             {
                 User newUser = repo.AddUser(user);
-                return Ok(new { Token = Util.GenerateJWT(newUser, _tokenOptions) });
+                return Ok(Util.GenerateJWT(newUser, _tokenOptions));
             }
 
             return StatusCode(StatusCodes.Status409Conflict, "User already exists"); 

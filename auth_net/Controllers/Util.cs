@@ -21,7 +21,7 @@ namespace auth_net.Controllers
             _config = config;
         }*/
 
-        public static string GenerateJWT(User user, TokenOptions tokenOptions)
+        public static object GenerateJWT(User user, TokenOptions tokenOptions)
         {
             var claims = new[]
             {
@@ -30,7 +30,7 @@ namespace auth_net.Controllers
             };
 
             //TODO : Get this stuff out from here into config or certificates
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions.SecretKey));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions.SigningKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
            
@@ -41,7 +41,7 @@ namespace auth_net.Controllers
               expires: DateTime.Now.AddMinutes(tokenOptions.Expiration),
               signingCredentials: creds);
             //TODO : Start returning token.ValidTo as expiration time
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return new { Token = new JwtSecurityTokenHandler().WriteToken(token), Expires = token.ValidTo };
         }
 
         public static bool PasswordsMatch(User retrievedUser, string password)

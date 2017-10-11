@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace auth_net
 {
@@ -20,6 +21,22 @@ namespace auth_net
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<TokenOptions>(Configuration.GetSection("Tokens"));
+            var tokenValidationParameters = new TokenValidationParameters()
+            {
+                ValidIssuer = Configuration["Tokens:Issuer"],
+                ValidAudience = Configuration["Tokens:Audience"],
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:SigningKey"])),
+                ValidateLifetime =true
+            };
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options => 
+            {
+                options.TokenValidationParameters = tokenValidationParameters;
+            });
             services.AddMvc();
         }
 
@@ -30,7 +47,6 @@ namespace auth_net
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

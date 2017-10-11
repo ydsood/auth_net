@@ -9,6 +9,7 @@ using auth_net.Model;
 using System.Security.Authentication;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using auth_net.Filters;
 
 namespace auth_net.Controllers
 {
@@ -25,10 +26,9 @@ namespace auth_net.Controllers
 
 
         [HttpPost]
+        [ValidateModel]
         public IActionResult Login([FromBody]UserLoginModel userLogin)
         {
-            if (string.IsNullOrEmpty(userLogin.UserName) || string.IsNullOrEmpty(userLogin.Password))
-                return Json(new { Error = "Missing parameters" });
             User user = UserRepository.Get().GetUser(userLogin.UserName);
             if (user == null)
             {
@@ -39,19 +39,13 @@ namespace auth_net.Controllers
             {
                 throw new AuthenticationException("Passwords don't match");
             }
-            return Ok(new { Token = Util.GenerateJWT(user, _tokenOptions) });
+            return Ok(Util.GenerateJWT(user, _tokenOptions));
         }
 
         [HttpGet]
         public IActionResult LoginForm()
         {
             return Json(new { Username = "Type Username here", Password = "Type Password here" });
-        }
-
-        public class UserLoginModel
-        {
-            public string UserName;
-            public string Password;
         }
     }
 }

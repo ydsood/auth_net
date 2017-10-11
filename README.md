@@ -33,7 +33,8 @@ public LoginController(IOptions<TokenOptions> tokenOptionsAccessor)
 ```
 
 ### References
-- [MongoDB C# driver docs](https://docs.mongodb.com/getting-started/csharp/update/)
+- [MongoDB C# driver docs](https://docs.mongodb.com/getting-started/csharp/)
 - [Dot Net Curry](http://www.dotnetcurry.com/aspnet-mvc/1267/using-mongodb-nosql-database-with-aspnet-webapi-core)
 - [Shawn Wildermuth's blog on authentication](https://wildermuth.com/2017/08/19/Two-AuthorizationSchemes-in-ASP-NET-Core-2)
-- [Microsoft docs](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration
+- [Microsoft docs](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration)
+- [Henrik F Neilsen's blog on Using MongoDB with WebAPI - Microsoft Blogs](https://blogs.msdn.microsoft.com/henrikn/2012/02/18/using-mongodb-with-asp-net-web-api/)
