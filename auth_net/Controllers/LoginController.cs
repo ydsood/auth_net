@@ -29,7 +29,7 @@ namespace auth_net.Controllers
             {
                 throw new AuthenticationException("Passwords don't match");
             }
-            return Ok(Util.GenerateJWT(user));
+            return Ok(new { Token = Util.GenerateJWT(user) });
         }
 
         [HttpGet]

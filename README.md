@@ -14,4 +14,5 @@ var result = _users.UpdateOne<User>(u => u.UserName == userName, update);
 ### References
 - [MongoDB C# driver docs](https://docs.mongodb.com/getting-started/csharp/update/)
 - [Dot Net Curry](http://www.dotnetcurry.com/aspnet-mvc/1267/using-mongodb-nosql-database-with-aspnet-webapi-core)
+- [Shawn Wildermuth's blog on authentication](https://wildermuth.com/2017/08/19/Two-AuthorizationSchemes-in-ASP-NET-Core-2)
 
